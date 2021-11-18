@@ -42,6 +42,11 @@ func interestTotalMonthlyPayment(interest_only_principle_amount, interest_only_i
 	return interest_only_principle_amount * (interest_only_interest_rate / 100) / 12
 }
 
+func debtServiceCosts(first_mtg_total_monthly_payment, second_mtg_total_monthly_payment, interest_only_monthly_payment, other_monthly_financing_costs float64) float64 {
+	return (-first_mtg_total_monthly_payment - second_mtg_total_monthly_payment - interest_only_monthly_payment - other_monthly_financing_costs) * 12
+}
+
 func main() {
 	fmt.Println(firstMtgTotalMonthlyPayment(78750, 3.63, 30))
+	fmt.Println(debtServiceCosts(357.94, 0, 0, 0))
 }
