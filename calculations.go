@@ -9,7 +9,7 @@ func totalIncome(gorss_rents, parking, storage, laundry_vending, other float64) 
 }
 
 func vacancyLoss(vacancy_rate, total_income float64) float64 {
-	return vacancy_rate * total_income
+	return (vacancy_rate / 100) * total_income
 }
 
 /*
@@ -20,5 +20,5 @@ func effectiveGrossIncome(total_income, vacancy_loss, float64) float64
 */
 
 func main() {
-	fmt.Println(vacancyLoss(0.05, 14400))
+	fmt.Println(vacancyLoss(5, 14400))
 }
