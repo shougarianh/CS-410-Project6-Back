@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 // Contains functions that do property calculations
@@ -28,9 +29,8 @@ func firstMtgTotalPrinciple(first_mtg_principle_borrowed, first_mtg_CMHC_fee flo
 }
 
 func firstMtgTotalMonthlyPayment(first_mtg_total_principle, first_mtg_interest_rate, first_mtg_amortization_period float64) float64 {
-	//var percentage float64 = first_mtg_interest_rate / 100
-	return 1 / 6
-	//return first_mtg_total_principle * (math.Pow((1/6), (1+(percentage/2))) - 1) /// (1 - math.Pow((math.Pow((1+(percentage/2)), (1/6))), (first_mtg_amortization_period*(-12))))
+	var percentage float64 = first_mtg_interest_rate / 100
+	return first_mtg_total_principle * (math.Pow((1+(percentage/2)), (1.0/6.0)) - 1) / (1 - math.Pow((math.Pow((1+(percentage/2)), (1.0/6.0))), (first_mtg_amortization_period*(-12))))
 }
 
 func main() {
