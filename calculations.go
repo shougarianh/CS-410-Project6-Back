@@ -33,9 +33,15 @@ func firstMtgTotalMonthlyPayment(first_mtg_total_principle, first_mtg_interest_r
 	return first_mtg_total_principle * (math.Pow((1+(percentage/2)), (1.0/6.0)) - 1) / (1 - math.Pow((math.Pow((1+(percentage/2)), (1.0/6.0))), (first_mtg_amortization_period*(-12))))
 }
 
+func secondMtgTotalMonthlyPayment(second_mtg_principal_amount, second_mtg_interest_rate, second_mtg_amortization_period float64) float64 {
+	var percentage float64 = second_mtg_interest_rate / 100
+	return second_mtg_principal_amount * (math.Pow((1+(percentage/2)), (1.0/6.0)) - 1) / (1 - math.Pow((math.Pow((1+(percentage/2)), (1.0/6.0))), (second_mtg_amortization_period*(-12))))
+}
+
+func interestTotalMonthlyPayment(interest_only_principle_amount, interest_only_interest_rate float64) float64 {
+	return interest_only_principle_amount * (interest_only_interest_rate / 100) / 12
+}
+
 func main() {
-	fmt.Println(vacancyLoss(14400, 720))
-	fmt.Println(firstMtgPrincipleBorrowed(105000, 25))
-	fmt.Println(firstMtgTotalPrinciple(78750, 0))
 	fmt.Println(firstMtgTotalMonthlyPayment(78750, 3.63, 30))
 }
