@@ -46,7 +46,16 @@ func debtServiceCosts(first_mtg_total_monthly_payment, second_mtg_total_monthly_
 	return (-first_mtg_total_monthly_payment - second_mtg_total_monthly_payment - interest_only_monthly_payment - other_monthly_financing_costs) * 12
 }
 
+func annualProfitOrLoss(net_operating_income, debt_servicing_cost float64) float64 {
+	return net_operating_income + debt_servicing_cost
+}
+
+func totalMonthlyProfitLoss(anual_profit_or_loss float64) float64 {
+	return anual_profit_or_loss / 12
+}
+
 func main() {
 	fmt.Println(firstMtgTotalMonthlyPayment(78750, 3.63, 30))
 	fmt.Println(debtServiceCosts(357.94, 0, 0, 0))
+
 }
