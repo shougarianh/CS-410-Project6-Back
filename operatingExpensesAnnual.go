@@ -4,7 +4,7 @@ type operatingExpensesAnnualInfo struct {
 	propertyTaxes, insurance, repairs, electricity, gas, lawnAndSnowMaintence           float64
 	waterAndSewer, cable, manangement, caretaking, advertizing, associationFees         float64
 	pestControl, security, trashRemoval, misc, commonAreaMaintence, capitalImprovements float64
-	accounting, legal, badDebts, other, evictions                                       float64
+	accounting, legal, badDebts, other                                                  float64
 }
 
 func evictions(number_of_units int, vacancy_rate float64) float64 {

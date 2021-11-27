@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	var propInfo propertyInfo
 	var purInfo purchaseInfo
@@ -45,7 +47,7 @@ func main() {
 	second_mtg_total_monthly_payment := secondMtgTotalMonthlyPayment(second_mtg_principal_amount, second_mtg_interest_rate, second_mtg_amortization_period)
 	cash_required_to_close := cashRequiredToClose(real_purchase_price, first_mtg_principle_borrowed, second_mtg_principal_amount, interest_only_principle_amount)
 	other_monthly_financing_costs := 0.0
-	interest_only_monthly_payment = 0.0
+	interest_only_monthly_payment := 0.0
 
 	// income annual
 
@@ -81,9 +83,9 @@ func main() {
 	opExpenInfo.accounting = 0
 	opExpenInfo.legal = 0
 	opExpenInfo.other = 0
-	opExpenInfo.evictions = 30
+	evictions := evictions(propInfo.numberOfUnits, propInfo.vacancyRate)
 
-	total_expenses := totalExpenses(opExpenInfo)
+	total_expenses := totalExpenses(opExpenInfo) + evictions
 
 	// net operating income
 
@@ -94,7 +96,7 @@ func main() {
 	cashRecInfo.depositMadeWithOffer = 0
 	cashRecInfo.lessProRationOfRents = 0
 	cashRecInfo.cashRequiredToClose = cash_required_to_close - cashRecInfo.depositMadeWithOffer
-	total_cash_required := totalCashRequired(cashRecInfo)
+	//total_cash_required := totalCashRequired(cashRecInfo)
 
 	// cash flow summary
 
@@ -102,5 +104,5 @@ func main() {
 	annual_profit_or_loss := annualProfitOrLoss(net_operating_income, debt_servicing_cost)
 	total_monthly_profit_loss := totalMonthlyProfitLoss(annual_profit_or_loss)
 	cash_flow_per_unit_per_month := cashFlowPerUnitPerMonth(total_monthly_profit_loss, float64(propInfo.numberOfUnits))
-
+	fmt.Println(cash_flow_per_unit_per_month)
 }
