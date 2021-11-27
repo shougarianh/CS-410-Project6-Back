@@ -1,12 +1,13 @@
 package main
 
+/*
 type cashFlowSummaryInfo struct {
 	//we can get these values from the other files.
 	//effectiveGrossIncome from incomeAnnual.go, operatingExpenses from operatingExpenses.go
 	//netOperatingIncome from netOperatingIncome.go
 	effectiveGrossIncome, incomeAnnual, netOperatingIncome float64
 }
-
+*/
 func debtServiceCosts(first_mtg_total_monthly_payment, second_mtg_total_monthly_payment, interest_only_monthly_payment, other_monthly_financing_costs float64) float64 {
 	return (-first_mtg_total_monthly_payment - second_mtg_total_monthly_payment - interest_only_monthly_payment - other_monthly_financing_costs) * 12
 }

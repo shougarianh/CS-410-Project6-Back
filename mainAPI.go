@@ -96,7 +96,7 @@ func main() {
 	cashRecInfo.depositMadeWithOffer = 0
 	cashRecInfo.lessProRationOfRents = 0
 	cashRecInfo.cashRequiredToClose = cash_required_to_close - cashRecInfo.depositMadeWithOffer
-	//total_cash_required := totalCashRequired(cashRecInfo)
+	total_cash_required := totalCashRequired(cashRecInfo)
 
 	// cash flow summary
 
@@ -104,5 +104,11 @@ func main() {
 	annual_profit_or_loss := annualProfitOrLoss(net_operating_income, debt_servicing_cost)
 	total_monthly_profit_loss := totalMonthlyProfitLoss(annual_profit_or_loss)
 	cash_flow_per_unit_per_month := cashFlowPerUnitPerMonth(total_monthly_profit_loss, float64(propInfo.numberOfUnits))
+
+	// quick analysis
+	cash_on_cash_roi := cashOnCashRoi(total_cash_required, annual_profit_or_loss)
+	fmt.Println(total_cash_required)
+	fmt.Println(annual_profit_or_loss)
 	fmt.Println(cash_flow_per_unit_per_month)
+	fmt.Println(cash_on_cash_roi)
 }
