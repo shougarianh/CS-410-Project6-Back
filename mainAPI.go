@@ -6,7 +6,7 @@ func main() {
 	var finMonthInfo financingMonthlyInfo
 	var inAnInfo incomeAnnualInfo
 	var opExpenInfo operatingExpensesAnnualInfo
-
+	var cashRecInfo cashRequirementInfo
 
 	// property info ----
 	propInfo.vacancyRate = 5
@@ -28,30 +28,35 @@ func main() {
 	purInfo.transferTax = 1227.36
 	purInfo.legal = 950
 
-	real_purchase_price = realPurchasePrice(purInfo)
+	real_purchase_price := realPurchasePrice(purInfo)
 
 	// financing monthly
-	finMonthInfo.downPaymentPercent = 25;
-	finMonthInfo.firstMtgInterestRate = 3.63;
-	finMonthInfo.firstMtgAmortizationPeriod = 30;
-	finMonthInfo.firstMtgCMHCFee = 0;
-	second_mtg_principal_amount = 0
-	interest_only_principle_amount = 0
-	first_mtg_principle_borrowed = firstMtgPrincipleBorrowed(purInfo.offerPrice, finMonthInfo.downPaymentPercent)
-	first_mtg_total_principle = firstMtgTotalPrinciple(first_mtg_principle_borrowed, finMonthInfo.firstMtgCMHCFee)
-	first_mtg_total_monthlyPayment = firstMtgTotalMonthlyPayment(first_mtg_total_principle, finMonthInfo.firstMtgInterestRate, finMonthInfo.firstMtgAmortizationPeriod)
-	cash_required_to_close = cashRequiredToClose(real_purchase_price, first_mtg_principle_borrowed, second_mtg_principal_amount, interest_only_principle_amount)
+	finMonthInfo.downPaymentPercent = 25.0
+	finMonthInfo.firstMtgInterestRate = 3.63
+	finMonthInfo.firstMtgAmortizationPeriod = 30
+	finMonthInfo.firstMtgCMHCFee = 0.0
+	second_mtg_principal_amount := 0.0
+	second_mtg_interest_rate := 12.0
+	second_mtg_amortization_period := 9999.99
+	interest_only_principle_amount := 0.0
+	first_mtg_principle_borrowed := firstMtgPrincipleBorrowed(purInfo.offerPrice, finMonthInfo.downPaymentPercent)
+	first_mtg_total_principle := firstMtgTotalPrinciple(first_mtg_principle_borrowed, finMonthInfo.firstMtgCMHCFee)
+	first_mtg_total_monthly_payment := firstMtgTotalMonthlyPayment(first_mtg_total_principle, finMonthInfo.firstMtgInterestRate, finMonthInfo.firstMtgAmortizationPeriod)
+	second_mtg_total_monthly_payment := secondMtgTotalMonthlyPayment(second_mtg_principal_amount, second_mtg_interest_rate, second_mtg_amortization_period)
+	cash_required_to_close := cashRequiredToClose(real_purchase_price, first_mtg_principle_borrowed, second_mtg_principal_amount, interest_only_principle_amount)
+	other_monthly_financing_costs := 0.0
+	interest_only_monthly_payment = 0.0
 
 	// income annual
 
-	inAnInfo.grossRents = 14400
-	inAnInfo.parking = 0
-	inAnInfo.storage = 0
-	inAnInfo.laundryAndVending = 0
-	inAnInfo.other = 0
-	total_income = totalIncome(inAnInfo)
-	vacancy_loss = vacancyLoss(propInfo.vacancyRate ,total_income)
-	effective_gross_income = effectiveGrossIncome(total_income, vacancy_loss)
+	inAnInfo.grossRents = 14400.0
+	inAnInfo.parking = 0.0
+	inAnInfo.storage = 0.0
+	inAnInfo.laundryAndVending = 0.0
+	inAnInfo.other = 0.0
+	total_income := totalIncome(inAnInfo)
+	vacancy_loss := vacancyLoss(propInfo.vacancyRate, total_income)
+	effective_gross_income := effectiveGrossIncome(total_income, vacancy_loss)
 
 	// Operating expenses
 
@@ -78,15 +83,24 @@ func main() {
 	opExpenInfo.other = 0
 	opExpenInfo.evictions = 30
 
-	total_expenses = total_expenses(opExpenInfo)
+	total_expenses := totalExpenses(opExpenInfo)
 
+	// net operating income
 
-	
+	net_operating_income := netOperatingIncome(effective_gross_income, total_expenses)
 
+	// cash requirments
 
+	cashRecInfo.depositMadeWithOffer = 0
+	cashRecInfo.lessProRationOfRents = 0
+	cashRecInfo.cashRequiredToClose = cash_required_to_close - cashRecInfo.depositMadeWithOffer
+	total_cash_required := totalCashRequired(cashRecInfo)
 
-}
+	// cash flow summary
 
-func realPurchasePrice(purInfo invalid type) {
-	panic("unimplemented")
+	debt_servicing_cost := debtServiceCosts(first_mtg_total_monthly_payment, second_mtg_total_monthly_payment, interest_only_monthly_payment, other_monthly_financing_costs)
+	annual_profit_or_loss := annualProfitOrLoss(net_operating_income, debt_servicing_cost)
+	total_monthly_profit_loss := totalMonthlyProfitLoss(annual_profit_or_loss)
+	cash_flow_per_unit_per_month := cashFlowPerUnitPerMonth(total_monthly_profit_loss, float64(propInfo.numberOfUnits))
+
 }
