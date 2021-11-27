@@ -62,5 +62,4 @@ func main() {
 	fmt.Println(firstMtgTotalMonthlyPayment(78750, 3.63, 30))
 	fmt.Println(debtServiceCosts(357.94, 0, 0, 0))
 	fmt.Println(totalMonthlyProfitLoss(4604))
-
 }
