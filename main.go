@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"github.com/gorilla/mux"
 )
 
 type PropertyCalculations struct {
@@ -131,10 +132,11 @@ func returnPropertyInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
-	http.HandleFunc("/", homePage)
-	http.HandleFunc("/propertyInfo", returnPropertyInfo)
+	router := mux.NewRouter()
+	router.HandleFunc("/", homePage).Methods("GET")
 	log.Fatal(http.ListenAndServe(":10000", nil))
 }
+
 
 func main() {
 	handleRequests()
