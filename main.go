@@ -1,8 +1,26 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+)
 
-func main() {
+type PropertyCalculations struct {
+	TotalCashRequired       float64 `json:"TotalCashRequired"`
+	AnnualProfitOrLoss      float64 `json:"AnnualProfitOrLoss"`
+	CashFlowPerUnitPerMonth float64 `json:"CashFlowPerUnitPerMonth"`
+	CashOnCashRoi           float64 `json:"CashOnCashRoi"`
+}
+
+func homePage(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Welcome to the HomePage!")
+	fmt.Println("Endpoint Hit: homePage")
+}
+
+func returnPropertyInfo(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Endpoint Hit: returnPropertyInfo")
 	var propInfo propertyInfo
 	var purInfo purchaseInfo
 	var finMonthInfo financingMonthlyInfo
@@ -107,8 +125,17 @@ func main() {
 
 	// quick analysis
 	cash_on_cash_roi := cashOnCashRoi(total_cash_required, annual_profit_or_loss)
-	fmt.Println(total_cash_required)
-	fmt.Println(annual_profit_or_loss)
-	fmt.Println(cash_flow_per_unit_per_month)
-	fmt.Println(cash_on_cash_roi)
+	propCalcs := PropertyCalculations{TotalCashRequired: total_cash_required, AnnualProfitOrLoss: annual_profit_or_loss,
+		CashOnCashRoi: cash_on_cash_roi, CashFlowPerUnitPerMonth: cash_flow_per_unit_per_month}
+	json.NewEncoder(w).Encode(propCalcs)
+}
+
+func handleRequests() {
+	http.HandleFunc("/", homePage)
+	http.HandleFunc("/propertyInfo", returnPropertyInfo)
+	log.Fatal(http.ListenAndServe(":10000", nil))
+}
+
+func main() {
+	handleRequests()
 }
