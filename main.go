@@ -86,8 +86,6 @@ func returnPropertyInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "Person: %+v", input)
-
 	var propInfo propertyInfo
 	var purInfo purchaseInfo
 	var finMonthInfo financingMonthlyInfo
